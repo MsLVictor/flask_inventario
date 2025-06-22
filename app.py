@@ -8,12 +8,13 @@ load_dotenv()
 
 app = Flask(__name__)
 
-# --- Configuração do Banco de Dados ---
-# Tenta obter a URI do banco de dados de uma variável de ambiente (ideal para produção/nuvem)
-# Se não estiver definida, usa uma URI de exemplo para PostgreSQL local (para desenvolvimento)
-# Formato da URI para PostgreSQL: postgresql://user:password@host:port/database_name
-# Ex: 'postgresql://postgres:mysecretpassword@localhost:5432/meu_inventario_db'
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+database_url = os.environ.get('DATABASE_URL')
+
+# Ajuste para Render: troca 'postgres://' por 'postgresql://'
+if database_url and database_url.startswith("postgres://"):
+    database_url = database_url.replace("postgres://", "postgresql://", 1)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 
 # Desabilita o rastreamento de modificações, o que economiza memória
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
