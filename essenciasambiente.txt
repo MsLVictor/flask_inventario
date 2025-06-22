@@ -1,0 +1,5 @@
+{"nome": "Agua verde JD01770", "quantidade": 3145, "preco": 0, "id": 2}
+{"nome": "Alecrim JD02200", "quantidade": 1245, "preco": 0, "id": 3}
+{"nome": "Armani JD02348", "quantidade": 1939, "preco": 0, "id": 4}
+{"nome": "Alfazema JD02194", "quantidade": 3792, "preco": 0, "id": 5}
+{"nome": "Ambercrombie JD02133", "quantidade": 7200, "preco": 0, "id": 6}

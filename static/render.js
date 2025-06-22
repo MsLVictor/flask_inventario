@@ -1,27 +1,40 @@
-export function renderProducts(products, editProduct, deleteProduct) {
-    const productList = document.getElementById('product-list');
-    productList.innerHTML = ''; //limpa tabela antes de renderizar para evitar duplicação.
+import { deletarProduto } from "./storage.js";
+import { preencherFormulario } from "./form.js";
 
-    products.forEach((product, index) => {
-        const row = document.createElement('tr');
+export function renderProducts(produtos, carregarProdutos) {
+  const lista = document.getElementById("product-list");
+  lista.innerHTML = "";
 
-        row.innerHTML = `
-            <td>${product.nome}</td>
-            <td>${product.quantidade}</td>
-            <td>${product.preco.toFixed(2)}</td>
-            <td>
-                <button class="edit">Editar</button>
-                <button class="delete">Excluir</button>
-            </td>
-        `;
-        productList.appendChild(row);
+  produtos.forEach(p => {
+    const tr = document.createElement("tr");
 
-        const editBtn = row.querySelector('.edit');
-        const deleteBtn = row.querySelector('.delete');
+    tr.innerHTML = `
+      <td>${p.nome}</td>
+      <td>${p.quantidade}</td>
+      <td>R$ ${p.preco.toFixed(2)}</td>
+      <td></td>
+    `;
 
-        editBtn.addEventListener('click', () => editProduct(index));
+    const tdAcoes = tr.querySelector("td:last-child");
 
-        deleteBtn.addEventListener('click', () => deleteProduct(index));
+    // Botão deletar
+    const btnDel = document.createElement("button");
+    btnDel.textContent = "🗑️";
+    btnDel.addEventListener("click", async () => {
+      await deletarProduto(p.id);
+      carregarProdutos();
     });
 
+    // Botão editar
+    const btnEdit = document.createElement("button");
+    btnEdit.textContent = "✏️";
+    btnEdit.addEventListener("click", () => {
+      preencherFormulario(p.id, p.nome, p.quantidade, p.preco);
+    });
+
+    tdAcoes.appendChild(btnDel);
+    tdAcoes.appendChild(btnEdit);
+
+    lista.appendChild(tr);
+  });
 }

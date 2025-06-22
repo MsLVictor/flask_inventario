@@ -1,76 +1,55 @@
-import { renderProducts } from './render.js';
-import { showMessage } from './ui.js';
-import { saveProducts, getProducts } from './storage.js';
+import { adicionarProduto, editarProduto, carregarProdutos as fetchProdutos } from "./storage.js";
+import { renderProducts } from "./render.js";
 
-export function setupForm() {
-  //essa parte do código da função aos ids que eu quero manipular no html através pelo javascript
-  const form = document.getElementById('product-form');
-  const nameInput = document.getElementById('nome');
-  const qtdInput = document.getElementById('quantidade');
-  const precoInput = document.getElementById('preco');
-  const submit = form.querySelector('button[type="submit"]');
+let modoEdicaoId = null;
 
-  let products = getProducts();
-  let editando = false;
-  let editandoIndex = null;
+export function configurarFormulario() {
+  const form = document.getElementById("product-form");
+  const btnSubmit = document.getElementById("submitButton");
 
-  // Função para editar produto
-  function editProduct(index) {
-    const product = products[index];
-    nameInput.value = product.nome;
-    qtdInput.value = product.quantidade;
-    precoInput.value = product.preco;
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-    editando = true;
-    editandoIndex = index;
-    submit.textContent = "Salvar";
+    const nome = form.nome.value.trim();
+    const quantidade = parseInt(form.quantidade.value);
+    const preco = parseFloat(form.preco.value);
 
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  }
+    try {
+      if (modoEdicaoId) {
+        await editarProduto(modoEdicaoId, { nome, quantidade, preco });
+        modoEdicaoId = null;
+        btnSubmit.textContent = "Adicionar";
+      } else {
+        await adicionarProduto({ nome, quantidade, preco });
+      }
 
-  // Função para deletar produto
-  function deleteProduct(index) {
-    const confirmDelete = confirm("Tem certeza que deseja excluir este produto da lista?");
-    if (confirmDelete) {
-      products.splice(index, 1);
-      saveProducts(products);
-      showMessage("Produto excluído com sucesso!");
-      renderProducts(products, editProduct, deleteProduct);
+      form.reset();
+      carregarProdutos();
+    } catch (err) {
+      alert("Erro ao salvar produto");
+      console.error(err);
     }
-  }
-
-  //função para envio do formulário "submit" é o id do botão lá no html
-  //criar
-  form.addEventListener('submit', function(event) {
-    //evento para a página não atualizar quando eu enviar o formulário
-    event.preventDefault();
-
-    //objeto com dados do formulário
-    const product = {
-      nome: nameInput.value,
-      quantidade: parseInt(qtdInput.value),
-      preco: parseFloat(precoInput.value)
-    };
-
-    if (editando) {
-      products[editandoIndex] = product;
-      editando = false;
-      editandoIndex = null;
-      submit.textContent = "Adicionar";
-    } else {
-      //adiciona produto na lista
-      products.push(product);
-    }
-
-    saveProducts(products);
-    showMessage("Produto salvo/adicionado com sucesso!");
-    renderProducts(products, editProduct, deleteProduct);
-    form.reset();
   });
+}
 
-  // Renderizar a lista inicial
-  renderProducts(products, editProduct, deleteProduct);
+export async function carregarProdutos() {
+  try {
+    const produtos = await fetchProdutos();
+    renderProducts(produtos, carregarProdutos);
+  } catch (err) {
+    console.error("Erro ao carregar produtos:", err);
+  }
+}
+
+export function preencherFormulario(id, nome, quantidade, preco) {
+  modoEdicaoId = id;
+
+  const form = document.getElementById("product-form");
+  const btnSubmit = document.getElementById("submitButton");
+
+  form.nome.value = nome;
+  form.quantidade.value = quantidade;
+  form.preco.value = preco;
+
+  btnSubmit.textContent = "Atualizar";
 }

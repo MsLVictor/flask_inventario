@@ -1,6 +1,6 @@
-import { setupForm  } from "./form.js";
+import { configurarFormulario, carregarProdutos } from "./form.js";
 
-//função para iniciar o sistema
-document.addEventListener('DOMContentLoaded', () => {
-    setupForm();
+document.addEventListener("DOMContentLoaded", () => {
+  configurarFormulario();
+  carregarProdutos();
 });
