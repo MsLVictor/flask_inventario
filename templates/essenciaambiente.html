@@ -1,6 +1,6 @@
 {% extends "modelo.html" %}
 {% block conteudo %}
-
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <!--<div id="preloader">
         <div class="loader-content">
             <p>Carregando seu Inventário...</p>
@@ -35,6 +35,6 @@
     </table>
   </div>
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
 <script type="module" src="{{ url_for('static', filename='main.js') }}"></script>
 {% endblock %}
