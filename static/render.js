@@ -5,6 +5,7 @@ export function renderProducts(produtos, carregarProdutos) {
   const lista = document.getElementById("product-list");
   lista.innerHTML = "";
 
+
   produtos.forEach(p => {
     const tr = document.createElement("tr");
 

@@ -18,14 +18,16 @@
     <button type="submit" id="submitButton">Adicionar</button>
   </form>
 
+      <input type="text" id="searchInput" placeholder="Pesquisar essências...">
+
   <div class="container mt-5" id="message"></div>
 
-    <table >
+    <table id="essenciaListContainer">
       <thead class="table-light">
         <tr>
           <th>Produto</th>
           <th>Quantidade</th>
-          <th>Preço (R$)</th>
+          <th>Preço R$</th>
           <th>Ações</th>
         </tr>
       </thead>
@@ -36,5 +38,6 @@
   </div>
 
 
+<script type="module" src="{{ url_for('static', filename='searchProduct.js') }}"></script>
 <script type="module" src="{{ url_for('static', filename='main.js') }}"></script>
 {% endblock %}

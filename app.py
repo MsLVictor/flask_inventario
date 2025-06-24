@@ -30,6 +30,9 @@ class Produto(db.Model):
     quantidade = db.Column(db.Integer, nullable=False)
     preco = db.Column(db.Float, nullable=False)
 
+    def __repr__(self):
+        return f"Produto('{self.nome}', Quantidade: {self.quantidade}, Preco: {self.preco})"
+
     # Método para converter o objeto Produto em um dicionário (útil para JSON)
     def to_dict(self):
         return {
@@ -58,6 +61,23 @@ def vidros():
 def essenciaambiente():
     return render_template('essenciaambiente.html')
 
+#nova rota para pesquisa assincrona
+@app.route('/search_essencia')
+def search_essencia():
+    query = request.args.get('q', '').strip()
+    # Se a query estiver vazia, retorne todas as essências (ou decida seu comportamento)
+    if not query:
+        produtos = Produto.query.order_by(Produto.nome).all()
+    else:
+        # Consulta ao banco de dados filtrando pelo termo de pesquisa
+        produtos = Produto.query.filter(
+            Produto.nome.ilike(f'%{query}%')).all()
+    # Converte os objetos Essencia em uma lista de dicionários
+    produtos_data = [p.to_dict() for p in produtos]
+
+    # Retorna os dados como JSON
+    return jsonify(produtos=produtos_data)
+
 @app.route('/essenciaperfume')
 def essenciaperfume():
     return render_template('essenciaperfume.html')
@@ -67,11 +87,9 @@ def outros():
     return render_template('outros.html')
 
 # ======== ROTAS DE PRODUTOS (CRUD) ========
-# As rotas da API CRUD para produtos permanecem as mesmas,
-# pois o SQLAlchemy abstrai o banco de dados subjacente
 @app.route('/produtos', methods=["GET"])
 def listar():
-    produtos = Produto.query.all()
+    produtos = Produto.query.order_by(Produto.nome).all()
     return jsonify([p.to_dict() for p in produtos])
 
 @app.route('/produtos', methods=["POST"])
@@ -102,6 +120,8 @@ def excluir(id):
     db.session.delete(produto)
     db.session.commit()
     return jsonify({"mensagem": "Produto excluído com sucesso"})
+
+
 
 # Executa o aplicativo em modo de depuração se o script for o principal
 if __name__ == '__main__':
