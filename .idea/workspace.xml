@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="025c4a5f-59ef-40ce-9f95-8df5501e3aa2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/projeto no pycharm.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/projeto no pycharm.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/form.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/render.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/render.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/essenciaambiente.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/essenciaambiente.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/modelo.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/modelo.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
